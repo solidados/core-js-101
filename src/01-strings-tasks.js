@@ -284,9 +284,15 @@ const isString = (value) => typeof value === 'string' || value instanceof String
  *   'K♠' => 51
  */
 function getCardId(value) {
-  return value;
+  const cardDeck = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+  return cardDeck.indexOf(value);
 }
-
+// console.log(getCardId('K♠'));
 
 module.exports = {
   concatenateStrings,
