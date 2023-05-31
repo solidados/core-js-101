@@ -212,7 +212,6 @@ function isPrime(n) {
   if (n < 2) {
     return false;
   }
-
   const root = Math.sqrt(n);
 
   for (let i = 2; i <= root; i += 1) {
@@ -236,9 +235,12 @@ function isPrime(n) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
-}
+const toNumber = (value, def) => {
+  if (parseInt(value, 10)) {
+    return value;
+  }
+  return def;
+};
 
 module.exports = {
   getRectangleArea,
