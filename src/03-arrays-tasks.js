@@ -366,9 +366,8 @@ const getFalsyValuesCount = (arr) => arr.filter((elem) => !elem).length;
  *    [ null, undefined, null ], null => 2
  *    [ true, 0, 1, 'true' ], true => 1
  */
-function findAllOccurrences(/* arr, item */) {
-  throw new Error('Not implemented');
-}
+const findAllOccurrences = (arr, item) => arr.filter((elem) => elem === item).length;
+
 
 /**
  * Concatenates all elements from specified array into single string with ',' delimiter
@@ -381,10 +380,7 @@ function findAllOccurrences(/* arr, item */) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
-}
-
+const toStringList = (arr) => arr.join(',');
 
 /**
  * Sorts the specified array by country name first and city name
@@ -412,9 +408,9 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
-}
+const sortCitiesArray = (arr) => arr.sort(
+  (a, b) => a.country.localeCompare(b.country) || a.city.localeCompare(b.city),
+);
 
 /**
  * Creates an identity matrix of the specified size
@@ -434,9 +430,13 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
-}
+const getIdentityMatrix = (n) => Array(n)
+  .fill(0)
+  .map((el, idx) => Array(n)
+    .fill(0)
+    .map((el2, idx2) => 1
+      - Math.min(Math.abs(idx - idx2), 1)));
+
 
 /**
  * Creates an array of integers from the specified start to end (inclusive)
@@ -451,9 +451,9 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
-}
+const getIntervalArray = (start, end) => new Array(end - start + 1)
+  .fill().map((elem, idx) => idx + start);
+
 
 /**
  * Returns array containing only unique values from the specified array.
@@ -466,9 +466,8 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
-}
+const distinct = (arr) => Array.from(new Set(arr));
+
 
 /**
  * Groups elements of the specified array by key.
@@ -500,9 +499,18 @@ function distinct(/* arr */) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
-}
+const group = (array, keySelector, valueSelector) => array
+  .reduce((country, city) => country.set(keySelector(city), (country.get(keySelector(city)) || [])
+    .concat(valueSelector(city))), new Map());
+
+/* console.log(group([
+  { country: 'Belarus', city: 'Brest' },
+  { country: 'Russia', city: 'Omsk' },
+  { country: 'Russia', city: 'Samara' },
+  { country: 'Belarus', city: 'Grodno' },
+  { country: 'Belarus', city: 'Minsk' },
+  { country: 'Poland', city: 'Lodz' }],
+(item) => item.country, (item) => item.city)); */
 
 
 /**
@@ -518,10 +526,8 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
-}
-
+const selectMany = (arr, childrenSelector) => arr.flatMap(childrenSelector);
+// console.log(selectMany(['one', 'two', 'three'], (x) => x.split('')));
 
 /**
  * Returns an element from the multidimensional array by the specified indexes.
