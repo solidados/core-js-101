@@ -300,6 +300,7 @@ const getPositivesCount = (arr) => arr.reduce((acc, elem) => {
   return result;
 }, 0);
 
+
 /**
  * Sorts digit names
  *
@@ -313,9 +314,13 @@ const getPositivesCount = (arr) => arr.reduce((acc, elem) => {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const humanReadNums = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  return arr
+    .sort((a, b) => humanReadNums.findIndex((elem) => elem === a)
+      - humanReadNums.findIndex((elem) => elem === b));
 }
+
 
 /**
  * Returns the sum of all items in the specified array of numbers
@@ -329,9 +334,8 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   [ -1, 1, -1, 1 ]      => 0
  *   [ 1, 10, 100, 1000 ]  => 1111
  */
-function getItemsSum(/* arr */) {
-  throw new Error('Not implemented');
-}
+const getItemsSum = (arr) => arr.reduce((acc, elem) => (acc + elem), 0);
+
 
 /**
  * Returns the number of all falsy value in the specified array
@@ -345,9 +349,8 @@ function getItemsSum(/* arr */) {
  *  [ -1, 'false', null, 0 ] => 2
  *  [ null, undefined, NaN, false, 0, '' ]  => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
-}
+const getFalsyValuesCount = (arr) => arr.filter((elem) => !elem).length;
+
 
 /**
  * Returns a number of all occurrences of the specified item in an array
