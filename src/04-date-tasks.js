@@ -19,9 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
-}
+const parseDataFromRfc2822 = (value) => new Date(value);
+
 
 /**
  * Parses an ISO 8601 string date representation into date value
@@ -34,9 +33,7 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
-}
+const parseDataFromIso8601 = (value) => Date.parse(value);
 
 
 /**
@@ -53,9 +50,10 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
-}
+const isLeapYear = (date) => {
+  const thisYear = date.getFullYear();
+  return (thisYear % 4 === 0 && thisYear % 100 !== 0) || thisYear % 400 === 0;
+};
 
 
 /**
