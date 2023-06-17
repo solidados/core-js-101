@@ -527,7 +527,7 @@ const group = (array, keySelector, valueSelector) => array
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
 const selectMany = (arr, childrenSelector) => arr.flatMap(childrenSelector);
-// console.log(selectMany(['one', 'two', 'three'], (x) => x.split('')));
+
 
 /**
  * Returns an element from the multidimensional array by the specified indexes.
@@ -541,10 +541,7 @@ const selectMany = (arr, childrenSelector) => arr.flatMap(childrenSelector);
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
-}
-
+const getElementByIndexes = (arr, indexes) => indexes.reduce((acc, curr) => acc[curr], arr);
 
 /**
  * Swaps the head and tail of the specified array:
@@ -564,8 +561,12 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const elem = Math.floor(arr.length / 2);
+  const head = arr.slice(0, elem);
+  const tail = arr.slice(arr.length % 2 ? elem + 1 : elem);
+  const mid = arr.length % 2 ? [arr[elem]] : [];
+  return [...tail, ...mid, ...head];
 }
 
 
