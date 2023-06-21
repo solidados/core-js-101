@@ -120,33 +120,98 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
+class CssSelectors {
+  constructor() {
+    this.selectors = [];
+    this.selectorsCombined = [];
+    this.error = {
+      useErr: 'Element, id and pseudo-element should not occur more then one time inside the selector',
+      orderErr: 'Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element',
+    };
+  }
+
+  element(value) {
+    if (this.selectors[0]) throw new Error(this.error.useErr);
+    if (this.selectors[1]) throw new Error(this.error.orderErr);
+
+    this.selectors[0] = value;
+    return this;
+  }
+
+  id(value) {
+    if (this.selectors[1]) throw new Error(this.error.useErr);
+    if (this.selectors[2] || this.selectors[5]) throw new Error(this.error.orderErr);
+
+    this.selectors[1] = `#${value}`;
+    return this;
+  }
+
+  class(value) {
+    if (this.selectors[3]) throw new Error(this.error.orderErr);
+    if (this.selectors[2]) {
+      this.selectors[2] += `.${value}`;
+    } else {
+      this.selectors[2] = `.${value}`;
+    }
+    return this;
+  }
+
+  attr(value) {
+    if (this.selectors[4]) throw new Error(this.error.orderErr);
+
+    this.selectors[3] = `[${value}]`;
+    return this;
+  }
+
+  pseudoClass(value) {
+    if (this.selectors[5]) throw new Error(this.error.orderErr);
+    if (this.selectors[4]) {
+      this.selectors[4] += `:${value}`;
+    } else {
+      this.selectors[4] = `:${value}`;
+    }
+    return this;
+  }
+
+  pseudoElement(value) {
+    if (this.selectors[5]) throw new Error(this.error.useErr);
+
+    this.selectors[5] = `::${value}`;
+    return this;
+  }
+
+  combine(selectorOne, combiner, selectorTwo) {
+    this.selectorsCombined = [selectorOne, combiner, selectorTwo];
+    return this;
+  }
+
+  stringify() {
+    if (this.selectorsCombined.length > 0) return this.selectorsCombined.join(' ');
+    return this.selectors.join('');
+  }
+}
+
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    return new CssSelectors().element(value);
   },
-
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    return new CssSelectors().id(value);
   },
-
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    return new CssSelectors().class(value);
   },
-
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    return new CssSelectors().attr(value);
   },
-
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    return new CssSelectors().pseudoClass(value);
   },
-
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    return new CssSelectors().pseudoElement(value);
   },
-
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selectorOne, combiner, selectorTwo) {
+    return new CssSelectors().combine(selectorOne.stringify(), combiner, selectorTwo.stringify());
   },
 };
 
