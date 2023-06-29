@@ -28,13 +28,12 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(isPositiveAnswer) {
-  return new Promise((resolve, reject) => {
-    if (isPositiveAnswer === true) return resolve('Hooray!!! She said "Yes"!');
-    if (isPositiveAnswer === false) return resolve('Oh no, she said "No".');
-    return reject(new Error('Wrong parameter is passed! Ask her again.'));
-  });
-}
+
+const willYouMarryMe = (isPositiveAnswer) => new Promise((resolve, reject) => {
+  if (isPositiveAnswer === true) return resolve('Hooray!!! She said "Yes"!');
+  if (isPositiveAnswer === false) return resolve('Oh no, she said "No".');
+  return reject(new Error('Wrong parameter is passed! Ask her again.'));
+});
 
 
 /**
@@ -52,10 +51,10 @@ function willYouMarryMe(isPositiveAnswer) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
-}
 
+const processAllPromises = (array) => Promise.all(array);
+
+// console.log(processAllPromises([1, 2, { three: 3 }, 'four']));
 /**
  * Return Promise object that should be resolved with value received from
  * Promise object that will be resolved first.
@@ -75,9 +74,7 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
-}
+const getFastestPromise = (array) => Promise.race(array);
 
 /**
  * Return Promise object that should be resolved with value that is
@@ -96,9 +93,16 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
-}
+const chainPromises = (array, action) => new Promise((resolve, reject) => {
+  const arrRes = [];
+  array
+    .forEach((promise) => promise
+      .then((response) => arrRes.push(response))
+      .catch((error) => reject(error)));
+  resolve(arrRes);
+})
+  .then((res) => res.reduce(action));
+
 
 module.exports = {
   willYouMarryMe,
